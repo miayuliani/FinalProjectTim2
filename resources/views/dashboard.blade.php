@@ -1,6 +1,6 @@
 @extends('layout.dashboard-layout')
 
-@section('title', 'Peta')
+@section('title', 'Fi-Maps Kota Bandung JUARA')
 
 @section('styles')
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -14,12 +14,51 @@
       height: 100vh; 
     }
     .leaflet-popup-content-wrapper {
-      background-color: #555;
-      color: #eee;
+      background-color: rgb(253, 251, 251);
+      color: rgb(20, 20, 20);
+      border-radius: 16px;
     }
     .leaflet-popup-tip {
-      background-color: #555;
+      background-color: rgb(255, 229, 80);
     }
+  </style>
+
+<style>
+  .button {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    width: 100px;
+    height: 30px;
+  }
+  .button2 {
+    background-color: #21cfdb;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;  
+    width: 120px;
+    height: 30px;
+  }
+  .form {
+    width: 200px;
+    height: 30px;
+    border-radius: 16px;
+    border: 1px black;
+    font-size: 13px;
+    text-align: left;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+  }
+
   </style>
 @endsection
 
@@ -40,20 +79,20 @@
 @endsection
 
 @section('content')
-  <header class="p-3 bg-dark text-white">
+  <header class="p-3 text-black" style="background-color: #EDEDED">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-map" viewBox="0 0 16 16" ">
-          <path fill-rule="evenodd" d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z"/>
-          <strong style= "margin-right: 10%;">&nbsp; Fi-Maps Kota Bandung JUARA</strong>
-        </svg>
-        <center>
-          <div class="text-end">
-            <button onclick="showMarker()" type="button" class="btn btn-warning " >Wifi Terdekat</button>
-            <button onclick="showPolygon()" type="button" class="btn btn-warning">Area Titik Wifi Lain</button>
-            <button onclick="clearMap()" type="button" class="btn btn-warning">Clear All Map</button>
+        <img src="fimaps.png" width="30" height="40"/><strong style= "margin-right: 40%;"> Fi-Maps BANDUNG JUARA</strong>
+
+        <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-2" role="search">
+          <input type="search" class="form" placeholder="Search..." aria-label="Search">
+        </form>
+
+          <div class="text-end" >
+            <button onclick="showMarker()" type="button" class="button2">Wifi Nearby</button>
+            <button onclick="clearMap()" type="button" class="button">Clear</button>
           </div>
-        </center>
+      
       </div>
     </div>
   </header>
@@ -79,14 +118,15 @@
     var OpenStreetMap_BZH = L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="http://www.openstreetmap.bzh/" target="_blank">Breton OpenStreetMap Team</a>'
     });
-    var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-    });
+    var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+      });
     var layerGroup = {
       "Dark Map": Esri_WorldImagery,
       "Ori Map": OpenStreetMap_BZH,
-      "Topo Map": OpenTopoMap,
       "World Topo Map": Esri_WorldTopoMap,
+      "StreetMap": OpenStreetMap_HOT
     };
 
       //custom icon marker
@@ -108,14 +148,7 @@
     shadowSize: [35, 35]
     });
 
-    //custom popup
-    var popup = {
-
-    }
-
-    var customPopup = new L.Popup({maxWidth: 150, maxHeight: 200, closeOnClick: false, autoClose: false})
-                .setContent(popup);
-
+    
     //basemap
       var mymap = L.map('mapid', {
       center: [currentCoordinate.latitude, currentCoordinate.longitude],
@@ -123,7 +156,7 @@
       maxZoom:20,
       minZoom: 6,
       zoomControl: false,
-      layers:[Esri_WorldTopoMap]
+      layers:[OpenStreetMap_HOT]
 		});
 
     // search box
@@ -140,6 +173,7 @@
 
         })
         mymap.addControl(controlSearch);
+
 							
 
     //position control 
@@ -158,6 +192,8 @@
       L.marker([currentCoordinate.latitude, currentCoordinate.longitude]).addTo(mymap)
     })
 
+    
+
     //fungsi load marker
     function showMarker() {
       data.forEach(element => {
@@ -166,9 +202,29 @@
           if (geojson.type == 'Point') {
             var latitude = geojson.coordinates[1];
             var longitude = geojson.coordinates[0];
+
+            var fromLatLng = L.latLng(currentCoordinate.latitude, currentCoordinate.longitude);
+            var toLatLng = L.latLng(latitude, longitude);
+
+            var dis = (fromLatLng.distanceTo(toLatLng)/1000).toFixed(1);
+            console.log(dis);
+
             var marker = L.marker([latitude, longitude], {icon : customicon})
-            marker.bindPopup(element.catatan).addTo(mymap);
-          }
+            marker.bindPopup(element.nama + '<hr class="featurette-divider">' +
+                            "Alamat Wifi" + " : " + element.alamat + '<hr class="featurette-divider">' +
+                            "Detail Wifi" + " : " + element.catatan + '<hr class="featurette-divider">'  +
+                            "Jarak Titik Wifi ke User : " + dis + "km").addTo(mymap);
+
+            L.circle([currentCoordinate.latitude, currentCoordinate.longitude], {
+                            color: '#0035F0',
+                            fillColor: '#0035F0',
+                            fillOpacity: 0.005,
+                            radius: 2000,
+                            weight: 0.2,
+                            })
+                            .bindPopup("Menjangkau sekitar 2 Kilometer dari titik lokasi saat ini")
+                            .addTo(mymap);
+            }
         }
       });
     }
@@ -190,7 +246,33 @@
       })
     }
 
+    setTimeout(function bandung() {
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', 'kota_bandung.geojson');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.setRequestHeader('Access-Control-Allow-Origin','*');
+		xhr.responseType = 'json';
+		xhr.onload = function() {
+			if (xhr.status !== 200) return
+			L.geoJSON(xhr.response).addTo(mymap);
+		};
+		xhr.send();
+		}, 3000);
+
     function clearMap() {
+      mymap.eachLayer(function(layer) {
+				if (!!layer.toGeoJSON) {
+				//console.log(layer);
+				mymap.removeLayer(layer);
+				}
+				});
+				mymap.removeLayer(drawnItems);
+				drawnItems = new L.FeatureGroup();
+				mymap.addLayer(drawnItems);
+
+				document.getElementById('nama').value = "";
+				document.getElementById('catatan').value = "";
+				document.getElementById('geojson').value = "";
       
     }
   </script>

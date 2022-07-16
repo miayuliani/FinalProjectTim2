@@ -9,7 +9,7 @@ class Gis extends Model
 {
     use HasFactory;
 
-    protected $table = "public.gis";
+    protected $table = "public.maps_kotabdg";
 
     public static function convertGeomToGeoJson($geom) {
         $data = \DB::select("SELECT ST_AsGeoJSON('$geom') as geojson");

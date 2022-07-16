@@ -30,3 +30,38 @@
 .dropdown-toggle {
   outline: 0;
 }
+
+.button {
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  width: 100px;
+  height: 30px;
+}
+.button2 {
+  background-color: #0fe3ff;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;  
+  width: 120px;
+  height: 30px;
+}
+.form {
+  width: 200px;
+  height: 30px;
+  border-radius: 16px;
+  border: 1px black;
+  font-size: 13px;
+  text-align: left;
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.18), 0 4px 4px 0 rgba(0,0,0,0.18);
+}
