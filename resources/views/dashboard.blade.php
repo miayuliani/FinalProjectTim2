@@ -89,7 +89,7 @@
         </form>
 
           <div class="text-end" >
-            <button onclick="showMarker()" type="button" class="button2">Wifi Nearby</button>
+            <button onclick="showMarker()" type="button" class="button2">Wifi Terdekat</button>
             <button onclick="clearMap()" type="button" class="button">Clear</button>
           </div>
       
@@ -188,8 +188,10 @@
 
     navigator.geolocation.getCurrentPosition((data) => {
       currentCoordinate = data.coords
-      mymap.flyTo([currentCoordinate.latitude, currentCoordinate.longitude], 15);
-      L.marker([currentCoordinate.latitude, currentCoordinate.longitude]).addTo(mymap)
+      mymap.flyTo([currentCoordinate.latitude, currentCoordinate.longitude], 14);
+      L.marker([currentCoordinate.latitude, currentCoordinate.longitude])
+      .bindPopup("Ini merupakan lokasi anda berada")
+      .addTo(mymap)
     })
 
     
@@ -210,10 +212,16 @@
             console.log(dis);
 
             var marker = L.marker([latitude, longitude], {icon : customicon})
-            marker.bindPopup(element.nama + '<hr class="featurette-divider">' +
-                            "Alamat Wifi" + " : " + element.alamat + '<hr class="featurette-divider">' +
-                            "Detail Wifi" + " : " + element.catatan + '<hr class="featurette-divider">'  +
-                            "Jarak Titik Wifi ke User : " + dis + "km").addTo(mymap);
+            marker.bindPopup('<img src="fimaps.png" width="20" height="25">' + element.nama + 
+                            '<hr class="featurette-divider">' +
+                             '<img src="address.png" width="20" height="20">' + "  Alamat Wifi" + " : " + element.alamat + 
+                             '<hr class="featurette-divider">' +
+                             '<img src="info.png" width="20" height="20">' + "  Detail Wifi" + " : " + element.catatan + 
+                             '<hr class="featurette-divider">' +
+                             '<img src="distance.png" width="25" height="20">' + "  Jarak Titik Wifi ke User : " + dis + "km" + 
+                             '<hr class="featurette-divider">' + 
+                             '<img src="key.png" width="20" height="20">' + "  Password : Diskominfo2020")
+                            .addTo(mymap);
 
             L.circle([currentCoordinate.latitude, currentCoordinate.longitude], {
                             color: '#0035F0',
@@ -245,6 +253,7 @@
         }
       })
     }
+
 
     setTimeout(function bandung() {
 		let xhr = new XMLHttpRequest();
